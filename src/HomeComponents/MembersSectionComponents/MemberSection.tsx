@@ -1,14 +1,19 @@
 import React, { useContext } from "react";
-import { UserContext } from "../userContext";
+import { IProject } from "../../App";
 
 interface Props {
-  CurrentProject: any;
+  CurrentProject: IProject;
 }
 
 export const MemberSection: React.FC<Props> = ({ CurrentProject }) => {
-  const UserValue = useContext(UserContext);
-  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ TODO $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-  let users = CurrentProject;
 
-  return <>{UserValue.me.name}</>;
+  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ TODO $$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+  return (
+    <>
+      {CurrentProject.users.map((user:{_id:string})=>{
+        return <div>{user._id}</div>
+      })}
+    </>
+  );
 };
