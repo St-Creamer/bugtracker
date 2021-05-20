@@ -1,7 +1,7 @@
 # BugTracker App
 
 I'm making a [MERN](https://www.mongodb.com/mern-stack) fullstack app to track my projects and bugs
-Using React typescript and no component library, I'm making my own using [StyledComponents](https://styled-components.com)
+Using React typescript and no component library, I'm making my own components using [StyledComponents](https://styled-components.com)
 
 The backend to this project is on [my other repo](https://github.com/St-Creamer/bugtracker-rest) 
 
