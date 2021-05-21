@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { SpecialButton } from "../SpecialButton";
-import { SpecialLabel } from "./Label";
+import { SpecialLabel } from "../Label";
+import { IProject } from "../../App";
+import { CurrentProjectContext } from "../../CurrentProjectContext";
 
-interface Props {
-  CurrentProject: any;
-}
+interface Props {}
 
 const ProjectPropertiesStyle = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const ProjectNameSection = styled.div`
 `;
 
 const ProjectName = styled.div`
-  width: 95%;
+  width: 90%;
   font-size: ${(Props) => Props.theme.font.large};
 `;
 
@@ -56,11 +56,12 @@ const Date = styled.div`
   height: 100%;
 `;
 
-export const ProjectSection: React.FC<Props> = ({ CurrentProject }) => {
-  const text: string = CurrentProject.status;
+export const ProjectSection: React.FC<Props> = () => {
+  const CurrentProjectValue = useContext(CurrentProjectContext);
+  //label config
+  const text: string = CurrentProjectValue.current.status;
   let color: string = "";
-  const status = CurrentProject.status;
-  switch (status) {
+  switch (CurrentProjectValue.current.status) {
     case "todo":
       color = "#25A6B8";
       break;
@@ -77,7 +78,7 @@ export const ProjectSection: React.FC<Props> = ({ CurrentProject }) => {
   return (
     <ProjectPropertiesStyle>
       <ProjectNameSection>
-        <ProjectName>{CurrentProject.name}</ProjectName>
+        <ProjectName>{CurrentProjectValue.current.name}</ProjectName>
         <SpecialButton />
       </ProjectNameSection>
       <ProjectStatus>
@@ -85,7 +86,7 @@ export const ProjectSection: React.FC<Props> = ({ CurrentProject }) => {
         <SpecialLabel text={text} color={color} />
       </ProjectStatus>
       <ProjectDate>
-        <Date>Date Started: {CurrentProject.dateStarted}</Date>
+        <Date>Date Started: {CurrentProjectValue.current.dateStarted}</Date>
       </ProjectDate>
     </ProjectPropertiesStyle>
   );

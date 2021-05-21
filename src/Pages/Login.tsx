@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { Button } from "./LoginComponents/Button";
-import { Container } from "./LoginComponents/Container";
-import { Field } from "./LoginComponents/Field";
-import { Input } from "./LoginComponents/Input";
+import { Button } from "../LoginComponents/Button";
+import { Container } from "../LoginComponents/Container";
+import { Field } from "../LoginComponents/Field";
+import { Input } from "../LoginComponents/Input";
 
 const Label = styled.label`
   margin: auto;
