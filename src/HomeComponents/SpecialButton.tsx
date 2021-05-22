@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-interface Props {}
-
 const Dot = styled.div`
   border-radius: 50%;
   height: 0.5rem;

@@ -8,6 +8,7 @@ const current:IProject = {
     status:"todo",
     users:[]
 } 
+
 const setCurrent: React.Dispatch<SetStateAction<IProject>>= () =>{}
 
 export const CurrentProjectContext = createContext({current,setCurrent})

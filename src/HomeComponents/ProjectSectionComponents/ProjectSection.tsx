@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import { SpecialButton } from "../SpecialButton";
 import { SpecialLabel } from "../Label";
-import { IProject } from "../../App";
 import { CurrentProjectContext } from "../../CurrentProjectContext";
 
 interface Props {}

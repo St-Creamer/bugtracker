@@ -1,5 +1,4 @@
 import React, { useContext, useMemo, useState } from "react";
-import { MockProjects } from "../DB/DB";
 import { Background } from "../HomeComponents/Background";
 import { Frame } from "../HomeComponents/Frame";
 import { Logo } from "../HomeComponents/ProjectSectionComponents/Logo";
@@ -12,8 +11,6 @@ import { MemberSection } from "../HomeComponents/MembersSectionComponents/Member
 import { IProject } from "../App";
 import { ProjectsContext } from "../ProjectsContext";
 import { CurrentProjectContext } from "../CurrentProjectContext";
-
-interface Props {}
 
 export const Home: React.FC = () => {
   const ProjectsValue = useContext(ProjectsContext);
@@ -35,7 +32,7 @@ export const Home: React.FC = () => {
   return (
     <Background>
       <CurrentProjectContext.Provider value={CurrentProjectValue}>
-        <Frame size={15} color={Theme.color.primary2}>
+        <Frame size={20} color={Theme.color.primary2}>
           <Logo>BugTracker</Logo>
           <NewProject>New Project +</NewProject>
           {/* this part serves as tabs */}
@@ -55,7 +52,7 @@ export const Home: React.FC = () => {
             ))}
           </ProjectsContainer>
         </Frame>
-        <Frame size={25} color={Theme.color.basic1}>
+        <Frame size={30} color={Theme.color.basic1}>
           {/* this part serves as tab content */}
           <ProjectSection />
           <MemberSection />

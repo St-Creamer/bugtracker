@@ -8,13 +8,14 @@ interface Props {
 
 export const SpecialLabel: React.FC<Props> = ({ text,color}) => {
   const LabelStyle = styled.div`
-    border-radius: 10px;
-    height: 1.3rem;
-    width: 4rem;
-    line-height: 1.1rem;
+    border-radius: 1.5rem;
+    height: 1.5rem;
+    width: 5rem;
+    line-height: 1.4rem;
     text-align: center;
     background-color: ${(Props) => color};
     margin: auto 0px;
+    font-size:${Props=> Props.theme.font.medium};
   `;
 
   return <LabelStyle>{text}</LabelStyle>;
