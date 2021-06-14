@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+interface Props {modalHandler?:any}
+
 const Dot = styled.div`
   border-radius: 50%;
   height: 0.5rem;
@@ -21,12 +23,12 @@ const SpecialButtonStyle = styled.div`
   margin: auto;
 `;
 
-export const SpecialButton: React.FC = () => {
+export const SpecialButton: React.FC<Props> = ({modalHandler}) => {
   return (
-    <SpecialButtonStyle>
-      <Dot />
-      <Dot />
-      <Dot />
-    </SpecialButtonStyle>
+      <SpecialButtonStyle onClick={modalHandler}>
+        <Dot />
+        <Dot />
+        <Dot />
+      </SpecialButtonStyle>
   );
 };

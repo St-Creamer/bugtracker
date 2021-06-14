@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { Modal } from "../../ModalSlug/Modal";
+import { ModalBody } from "../../ModalSlug/ModalBody";
+import { ModalFooter } from "../../ModalSlug/ModalFooter";
+import { ModalHeader } from "../../ModalSlug/ModalHeader";
 import { SpecialButton } from "../SpecialButton";
 
 interface Props{count?:number}
@@ -21,10 +25,21 @@ const MembersCount = styled.div`
 
 
 export const MembersHeader: React.FC<Props> = ({count}) => {
+  const [toggle,setToggle] = useState<boolean>(false);
+  const modalHandler = ()=>{
+    setToggle(!toggle);
+    console.log("modal handler called")
+  }
   return (
     <MembersHeaderStyle>
         <MembersCount>Members: {count}</MembersCount>
-        <SpecialButton/>
+        <SpecialButton modalHandler={modalHandler}/>
+        
+        <Modal show={toggle} clicked={modalHandler}>
+          <ModalHeader> header here</ModalHeader>
+          <ModalBody> big ol body</ModalBody>
+          <ModalFooter> feet</ModalFooter>
+        </Modal>
     </MembersHeaderStyle>
   );
 };
