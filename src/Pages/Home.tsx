@@ -15,6 +15,7 @@ import { Modal } from "../ModalSlug/Modal";
 import { ModalBody } from "../ModalSlug/ModalBody";
 import { ModalFooter } from "../ModalSlug/ModalFooter";
 import { ModalHeader } from "../ModalSlug/ModalHeader";
+import { BugSection } from "../HomeComponents/BugSectionComponents/BugSection";
 import styled from "styled-components";
 
 const ButtonStyle = styled.button`
@@ -81,7 +82,9 @@ export const Home: React.FC = () => {
           <ProjectSection />
           <MemberSection />
         </Frame>
-        <Frame color={Theme.color.white}></Frame>
+        <Frame color={Theme.color.white}>
+          <BugSection/>
+        </Frame>
       </CurrentProjectContext.Provider>
     </Background>
   );
