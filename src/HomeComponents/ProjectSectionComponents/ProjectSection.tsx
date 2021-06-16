@@ -1,8 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { SpecialButton } from "../SpecialButton";
 import { SpecialLabel } from "../Label";
 import { CurrentProjectContext } from "../../CurrentProjectContext";
+import { Modal } from "../../ModalSlug/Modal";
+import { ModalBody } from "../../ModalSlug/ModalBody";
+import { ModalFooter } from "../../ModalSlug/ModalFooter";
+import { ModalHeader } from "../../ModalSlug/ModalHeader";
 
 interface Props {}
 
@@ -11,7 +15,7 @@ const ProjectPropertiesStyle = styled.div`
   flex-direction: column;
   width: 100%;
 `;
-const ProjectNameSection = styled.div`
+const ProjectHeader = styled.div`
   height: 3.5rem;
   background-color: ${(Props) => Props.theme.color.basic2};
   line-height: 3rem;
@@ -55,6 +59,13 @@ const Date = styled.div`
   height: 100%;
 `;
 
+const ButtonStyle = styled.button`
+  width: 100px;
+  height: 30px;
+  margin-left:2rem;
+`;
+
+
 export const ProjectSection: React.FC<Props> = () => {
   const CurrentProjectValue = useContext(CurrentProjectContext);
   //label config
@@ -74,12 +85,26 @@ export const ProjectSection: React.FC<Props> = () => {
       color = "#E7E7E7";
       break;
   }
+  //modal state
+  const [toggle,setToggle] = useState<boolean>(false);
+  const modalHandler = () => {
+    setToggle(!toggle);
+    console.log("modal handler called");
+  };
   return (
     <ProjectPropertiesStyle>
-      <ProjectNameSection>
+      <ProjectHeader>
         <ProjectName>{CurrentProjectValue.current.name}</ProjectName>
-        <SpecialButton />
-      </ProjectNameSection>
+        <SpecialButton modalHandler={modalHandler}/>
+        <Modal show={toggle} clicked={modalHandler}>
+        <ModalHeader>Manage Projects</ModalHeader>
+        <ModalBody> project management here</ModalBody>
+        <ModalFooter>
+          <ButtonStyle onClick={modalHandler}>Cancel</ButtonStyle>
+          
+        </ModalFooter>
+      </Modal>
+      </ProjectHeader>
       <ProjectStatus>
         <Status>Project Status:</Status>
         <SpecialLabel text={text} color={color} />

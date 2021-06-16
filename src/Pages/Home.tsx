@@ -11,6 +11,17 @@ import { MemberSection } from "../HomeComponents/MembersSectionComponents/Member
 import { IProject } from "../App";
 import { ProjectsContext } from "../ProjectsContext";
 import { CurrentProjectContext } from "../CurrentProjectContext";
+import { Modal } from "../ModalSlug/Modal";
+import { ModalBody } from "../ModalSlug/ModalBody";
+import { ModalFooter } from "../ModalSlug/ModalFooter";
+import { ModalHeader } from "../ModalSlug/ModalHeader";
+import styled from "styled-components";
+
+const ButtonStyle = styled.button`
+  width: 100px;
+  height: 30px;
+  margin-left: 2rem;
+`;
 
 export const Home: React.FC = () => {
   const ProjectsValue = useContext(ProjectsContext);
@@ -28,13 +39,26 @@ export const Home: React.FC = () => {
       setActive(index);
     }
   };
+  //new project modal logic
+  const [toggle, setToggle] = useState<boolean>(false);
+  const modalHandler = () => {
+    setToggle(!toggle);
+  };
 
   return (
     <Background>
       <CurrentProjectContext.Provider value={CurrentProjectValue}>
         <Frame size={20} color={Theme.color.primary2}>
           <Logo>BugTracker</Logo>
-          <NewProject>New Project +</NewProject>
+          <NewProject onClick={modalHandler}>New Project +</NewProject>
+          <Modal show={toggle} clicked={modalHandler}>
+            <ModalHeader>New Project</ModalHeader>
+            <ModalBody> New Project Form Here</ModalBody>
+            <ModalFooter>
+              <ButtonStyle onClick={modalHandler}>Cancel</ButtonStyle>
+              <ButtonStyle onClick={modalHandler}>Ok</ButtonStyle>
+            </ModalFooter>
+          </Modal>
           {/* this part serves as tabs */}
           <ProjectsContainer>
             {ProjectsValue.projects.map((item: IProject, i) => (
