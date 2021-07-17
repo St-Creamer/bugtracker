@@ -1,4 +1,4 @@
-import {IUser,IProject} from "../App"
+import {IUser,IProject, IBug} from "../App"
 
 export const MockProjects:IProject[] = [
   {
@@ -58,3 +58,43 @@ export const members:IUser[]= [
         ]
     }
 ]
+
+
+export const bugs:IBug[] = [
+  {
+    _id: "4523123849345",
+    name: "bugsbunny",
+    priority: "1",
+    dateStarted: "22/12/2022",
+    status: "doing",
+    lastUpdated: "23/12/2222",
+    author: { _id: "1561584213" },
+  },
+  {
+    _id: "345844245384",
+    name: "bzzzzzzz",
+    priority: "2",
+    dateStarted: "20/10/2020",
+    status: "todo",
+    lastUpdated: "20/10/2020",
+    author: { _id: "1535453424" },
+  },
+  {
+    _id: "423232347748787",
+    name: "weeeeeeeee",
+    priority: "5",
+    dateStarted: "22/12/2022",
+    status: "done",
+    lastUpdated: "23/12/2222",
+    author: { _id: "1322897527" },
+  },
+  {
+    _id: "786786786424241",
+    name: "im hungry",
+    priority: "3",
+    dateStarted: "22/12/2022",
+    status: "doing",
+    lastUpdated: "23/12/2222",
+    author: { _id: "1322897527" },
+  }
+];

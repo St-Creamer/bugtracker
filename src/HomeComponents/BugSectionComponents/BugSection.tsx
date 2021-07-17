@@ -6,6 +6,7 @@ import { Modal } from "../../ModalSlug/Modal";
 import { ModalBody } from "../../ModalSlug/ModalBody";
 import { ModalFooter } from "../../ModalSlug/ModalFooter";
 import { ModalHeader } from "../../ModalSlug/ModalHeader";
+import { BugListSection } from "./BugListSection";
 
 interface Props {}
 
@@ -39,6 +40,8 @@ export const BugSection: React.FC<Props> = () => {
         </Modal>
         <BugSearchBar />
       </BugHeader>
+      {/* this section is kinda large so itll go in a seperate component file */}
+      <BugListSection/>
     </>
   );
 };

@@ -17,6 +17,7 @@ import { ModalFooter } from "../ModalSlug/ModalFooter";
 import { ModalHeader } from "../ModalSlug/ModalHeader";
 import { BugSection } from "../HomeComponents/BugSectionComponents/BugSection";
 import styled from "styled-components";
+import { MockProjects } from "../DB/DB";
 
 const ButtonStyle = styled.button`
   width: 100px;
@@ -25,7 +26,14 @@ const ButtonStyle = styled.button`
 `;
 
 export const Home: React.FC = () => {
-  const ProjectsValue = useContext(ProjectsContext);
+  //projects should come from the backend, belonging projects are filtered further down but the user can browse them all
+  const [projects, setProjects] = useState<IProject[]>(MockProjects);
+  const ProjectsValue = useMemo(
+    () => ({ projects, setProjects }),
+    [projects, setProjects]
+  );
+
+  // const ProjectsValue = useContext(ProjectsContext);
   //setting CurrentProjectContext
   const [current, setCurrent] = useState<IProject>(ProjectsValue.projects[0]);
   const CurrentProjectValue = useMemo(
@@ -47,45 +55,47 @@ export const Home: React.FC = () => {
   };
 
   return (
-    <Background>
-      <CurrentProjectContext.Provider value={CurrentProjectValue}>
-        <Frame size={20} color={Theme.color.primary2}>
-          <Logo>BugTracker</Logo>
-          <NewProject onClick={modalHandler}>New Project +</NewProject>
-          <Modal show={toggle} clicked={modalHandler}>
-            <ModalHeader>New Project</ModalHeader>
-            <ModalBody> New Project Form Here</ModalBody>
-            <ModalFooter>
-              <ButtonStyle onClick={modalHandler}>Cancel</ButtonStyle>
-              <ButtonStyle onClick={modalHandler}>Ok</ButtonStyle>
-            </ModalFooter>
-          </Modal>
-          {/* this part serves as tabs */}
-          <ProjectsContainer>
-            {ProjectsValue.projects.map((item: IProject, i) => (
-              <Project
-                key={`${item._id}`}
-                onClick={(e) => {
-                  handleClick(e);
-                  setCurrent(item);
-                }}
-                active={active === i}
-                id={i}
-              >
-                {item.name}
-              </Project>
-            ))}
-          </ProjectsContainer>
-        </Frame>
-        <Frame size={30} color={Theme.color.basic1}>
-          {/* this part serves as tab content */}
-          <ProjectSection />
-          <MemberSection />
-        </Frame>
-        <Frame color={Theme.color.white}>
-          <BugSection/>
-        </Frame>
-      </CurrentProjectContext.Provider>
-    </Background>
+    <ProjectsContext.Provider value={ProjectsValue}>
+      <Background>
+        <CurrentProjectContext.Provider value={CurrentProjectValue}>
+          <Frame size={20} color={Theme.color.primary2}>
+            <Logo>BugTracker</Logo>
+            <NewProject onClick={modalHandler}>New Project +</NewProject>
+            <Modal show={toggle} clicked={modalHandler}>
+              <ModalHeader>New Project</ModalHeader>
+              <ModalBody> New Project Form Here</ModalBody>
+              <ModalFooter>
+                <ButtonStyle onClick={modalHandler}>Cancel</ButtonStyle>
+                <ButtonStyle onClick={modalHandler}>Ok</ButtonStyle>
+              </ModalFooter>
+            </Modal>
+            {/* this part serves as tabs */}
+            <ProjectsContainer>
+              {ProjectsValue.projects.map((item: IProject, i) => (
+                <Project
+                  key={`${item._id}`}
+                  onClick={(e) => {
+                    handleClick(e);
+                    setCurrent(item);
+                  }}
+                  active={active === i}
+                  id={i}
+                >
+                  {item.name}
+                </Project>
+              ))}
+            </ProjectsContainer>
+          </Frame>
+          <Frame size={30} color={Theme.color.basic1}>
+            {/* this part serves as tab content */}
+            <ProjectSection />
+            <MemberSection />
+          </Frame>
+          <Frame color={Theme.color.white}>
+            <BugSection />
+          </Frame>
+        </CurrentProjectContext.Provider>
+      </Background>
+    </ProjectsContext.Provider>
   );
 };
