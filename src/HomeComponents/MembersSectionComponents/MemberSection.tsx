@@ -21,7 +21,7 @@ export const MemberSection: React.FC<Props> = () => {
     <>
       <MembersHeader count={CurrentProjectValue.current.users.length} />
       {CurrentMembers.map((user:IUser) => {
-        return <Member user={user}/>;
+        return <Member key={user._id} user={user}/>;
       })}
     </>
   );

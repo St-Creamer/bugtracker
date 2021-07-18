@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Background } from "../HomeComponents/Background";
 import { Frame } from "../HomeComponents/Frame";
 import { Logo } from "../HomeComponents/ProjectSectionComponents/Logo";
@@ -18,6 +18,7 @@ import { ModalHeader } from "../ModalSlug/ModalHeader";
 import { BugSection } from "../HomeComponents/BugSectionComponents/BugSection";
 import styled from "styled-components";
 import { MockProjects } from "../DB/DB";
+import { useHistory } from "react-router-dom";
 
 const ButtonStyle = styled.button`
   width: 100px;
@@ -32,6 +33,27 @@ export const Home: React.FC = () => {
     () => ({ projects, setProjects }),
     [projects, setProjects]
   );
+  const history = useHistory()
+
+  useEffect(() => {
+    fetch("http://localhost:4000/project", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      method: "GET",
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        if(res.type=="error")
+          history.push("/")
+        else(
+          console.log(res)
+        )
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // const ProjectsValue = useContext(ProjectsContext);
   //setting CurrentProjectContext
@@ -69,6 +91,7 @@ export const Home: React.FC = () => {
                 <ButtonStyle onClick={modalHandler}>Ok</ButtonStyle>
               </ModalFooter>
             </Modal>
+
             {/* this part serves as tabs */}
             <ProjectsContainer>
               {ProjectsValue.projects.map((item: IProject, i) => (
@@ -85,6 +108,7 @@ export const Home: React.FC = () => {
                 </Project>
               ))}
             </ProjectsContainer>
+            <div className="logout">logout</div>
           </Frame>
           <Frame size={30} color={Theme.color.basic1}>
             {/* this part serves as tab content */}
