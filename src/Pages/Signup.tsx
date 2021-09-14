@@ -1,21 +1,16 @@
-import { Formik } from "formik";
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
-import styled from "styled-components";
-import {
-  Button,
-  Button2,
-  Container,
-  Error,
-  Input,
-  Label,
-} from "../LoginComponents/Components";
-import { Box } from "../LoginComponents/Components";
+import { Field, Form, Formik } from "formik";
+import styled, { css } from "styled-components";
 import { Modal } from "../ModalSlug/Modal";
+import { ModalHeader } from "../ModalSlug/ModalHeader";
 import { ModalBody } from "../ModalSlug/ModalBody";
 import { ModalFooter } from "../ModalSlug/ModalFooter";
-import { ModalHeader } from "../ModalSlug/ModalHeader";
+import { Button } from "../LoginComponents/Components";
+import { useHistory } from "react-router";
+import { Box, Button2, Container, Error, Input, Label } from "../LoginComponents/Components";
 import * as Yup from "yup";
+
+interface Props {}
 
 const ModalButton = styled.button`
   width: 100px;
@@ -23,14 +18,28 @@ const ModalButton = styled.button`
   margin-left: 2rem;
 `;
 
-export const Login: React.FC = () => {
-    //yup schema
-    const Schema = Yup.object().shape({
-      password: Yup.string()
-        .defined("This field is required")
-        .min(8, "Password must be at least 8 characters"),
-      email: Yup.string().email().defined("This field is required"),
-    });
+export const Signup: React.FC<Props> = () => {
+  //yup schema
+  const Schema = Yup.object().shape({
+    password: Yup.string()
+      .defined("This field is required")
+      .min(8, "Password must be at least 8 characters"),
+    password2: Yup.string().when("password", {
+      is: (val: string) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("password")],
+        "Both password need to be the same"
+      ),
+    }),
+    email: Yup.string().email().defined("This field is required"),
+    email2: Yup.string().when("email", {
+      is: (val: string) => (val && val.length > 0 ? true : false),
+      then: Yup.string().oneOf(
+        [Yup.ref("email")],
+        "Both emails need to be the same"
+      ),
+    }),
+  });
 
   //modal stuff
   const [toggle, setToggle] = useState<boolean>(false);
@@ -44,9 +53,9 @@ export const Login: React.FC = () => {
   }
   const history = useHistory();
 
-  const submit = async (values: IFormValues) => {
+  const submit = (values: IFormValues) => {
     console.log(values);
-    fetch("http://localhost:4000/auth/login", {
+    fetch("http://localhost:4000/auth/signup", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -73,11 +82,13 @@ export const Login: React.FC = () => {
     <Formik
       initialValues={{
         email: "",
+        email2: "",
         password: "",
+        password2: "",
       }}
-      onSubmit={submit}
       validateOnChange={true}
       validationSchema={Schema}
+      onSubmit={submit}
     >
       {({ errors, touched }) => (
         <Container>
@@ -89,14 +100,28 @@ export const Login: React.FC = () => {
             ) : null}
           </Box>
           <Box direction={"column"}>
+            <Label htmlFor="email2">Confirm Email</Label>
+            <Input name="email2" id="email2" type="email" required />
+            {errors.email2 && touched.email2 ? (
+              <Error>{errors.email2}</Error>
+            ) : null}
+          </Box>
+          <Box direction={"column"}>
             <Label htmlFor="password">Password</Label>
             <Input name="password" id="password" type="password" required />
             {errors.password && touched.password ? (
               <Error>{errors.password}</Error>
             ) : null}
           </Box>
+          <Box direction={"column"}>
+            <Label htmlFor="password2">Confirm Password</Label>
+            <Input name="password2" id="password2" type="password" required />
+            {errors.password2 && touched.password2 ? (
+              <Error>{errors.password2}</Error>
+            ) : null}
+          </Box>
           <Box direction={"row"}>
-            <Button2 type="submit">Login</Button2>
+            <Button2 type="submit">Signup</Button2>
             <Modal show={toggle} clicked={modalHandler}>
               <ModalHeader>Alert</ModalHeader>
               <ModalBody> Server Offline</ModalBody>
@@ -104,7 +129,8 @@ export const Login: React.FC = () => {
                 <ModalButton onClick={modalHandler}>Ok</ModalButton>
               </ModalFooter>
             </Modal>
-            <Button to="/Signup">Signup</Button>
+            {/* leads to another page perhaps */}
+            <Button to="/">Back to Login</Button>
           </Box>
         </Container>
       )}

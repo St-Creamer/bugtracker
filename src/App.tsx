@@ -7,6 +7,7 @@ import { Login } from "./Pages/Login";
 import { Theme } from "./Theme";
 import { UserContext } from "./userContext";
 import { members } from "./DB/DB";
+import { Signup } from "./Pages/Signup";
 
 
 //interface types should be changed in accordance with backend later on
@@ -52,6 +53,7 @@ export function App() {
           <Switch>
             <Route path="/" exact component={Login} />
             <Route path="/Home" exact component={Home} />
+            <Route path="/Signup" exact component={Signup} />
             {/* <Route path="/"  component={ErrorPage}/> */}
           </Switch>
         </BrowserRouter>
