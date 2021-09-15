@@ -7,6 +7,7 @@ interface Props {
 
 export const Project = styled.div<Props>`
   height: 3.5rem;
+  margin-left: ${(Props) => (Props.active ? "10px" : "0px")};
   border-bottom: 1px solid
     ${(Props) => (Props.active ? "none" : Props.theme.color.primary1)};
   padding-left: 2vh;

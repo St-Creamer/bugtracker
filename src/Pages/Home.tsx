@@ -33,7 +33,7 @@ export const Home: React.FC = () => {
     () => ({ projects, setProjects }),
     [projects, setProjects]
   );
-  const history = useHistory()
+  const history = useHistory();
 
   useEffect(() => {
     fetch("http://localhost:4000/project", {
@@ -46,11 +46,8 @@ export const Home: React.FC = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if(res.type=="error")
-          history.push("/")
-        else(
-          console.log(res)
-        )
+        if (res.type == "error") history.push("/");
+        else console.log(res);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -74,6 +71,35 @@ export const Home: React.FC = () => {
   const [toggle, setToggle] = useState<boolean>(false);
   const modalHandler = () => {
     setToggle(!toggle);
+  };
+
+  const logout = async () => {
+    //let requestHeaders:HeadersInit = {"Content-Type": "application/json",withCredentials: "true"}
+    const requestHeaders: HeadersInit = new Headers();
+    requestHeaders.set("Content-Type", "application/json");
+    requestHeaders.set("withCredentials", "true");
+    await fetch("http://localhost:4000/auth/logout", {
+      method: "GET",
+      mode: "cors",
+      credentials: "include",
+      headers: requestHeaders,
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        if (res.msg.includes("logged out")) {
+          document.cookie =
+            "AuthCookie" +
+            "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=localhost;";
+          document.cookie =
+            "Me" +
+            "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=localhost;";
+            history.push("/")
+        }
+      })
+      .catch((err) => {
+        alert("Can't logout something went wrong" + err);
+      });
   };
 
   return (
@@ -108,7 +134,7 @@ export const Home: React.FC = () => {
                 </Project>
               ))}
             </ProjectsContainer>
-            <div className="logout">logout</div>
+            <button onClick={logout}>logout</button>
           </Frame>
           <Frame size={30} color={Theme.color.basic1}>
             {/* this part serves as tab content */}
