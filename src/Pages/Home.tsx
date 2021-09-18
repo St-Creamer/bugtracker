@@ -26,6 +26,16 @@ const ButtonStyle = styled.button`
   margin-left: 2rem;
 `;
 
+const Logout = styled.button`
+  width:100%;
+  height:3.5rem;
+  border:1px solid ${props => props.theme.color.primary2};
+  background-color:${props => props.theme.color.secondary1};
+  font-size:${props => props.theme.font.large};
+  margin-top:9vmax;
+  cursor:pointer
+`
+
 export const Home: React.FC = () => {
   //projects should come from the backend, belonging projects are filtered further down but the user can browse them all
   const [projects, setProjects] = useState<IProject[]>(MockProjects);
@@ -134,7 +144,7 @@ export const Home: React.FC = () => {
                 </Project>
               ))}
             </ProjectsContainer>
-            <button onClick={logout}>logout</button>
+            <Logout onClick={logout}>logout</Logout>
           </Frame>
           <Frame size={30} color={Theme.color.basic1}>
             {/* this part serves as tab content */}
