@@ -21,10 +21,10 @@ interface Props {user:IUser}
 export const Member: React.FC<Props> = ({user}) => {
     let color: string = "";
     switch (user.role) {
-      case "member":
+      case "Member":
         color = "#25A6B8";
         break;
-      case "admin":
+      case "Admin":
         color = "#ACDAE0";
         break;
       default:
