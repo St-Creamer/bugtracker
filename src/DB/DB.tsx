@@ -3,24 +3,28 @@ import {IUser,IProject, IBug} from "../App"
 export const MockProjects:IProject[] = [
   {
     _id: "36565163132",
-    name: "Project ass",
+    name: "Project coke",
     status: "todo",
     dateStarted: "now",
     users: [{ _id: "1561584213" }, { _id: "1535453424" }, { _id: "1322897527" }],
+    bugs: [{ _id: "4523123849345" }, { _id: "345844245384" }, { _id: "423232347748787" },{ _id:"786786786424241"}],
   },
   {
     _id: "4524532445241",
-    name: "Project peepee",
+    name: "Project pepsi",
     status: "done",
     dateStarted: "later",
     users: [{ _id: "1561584213" }, { _id: "1535453424" }],
+    bugs: [{ _id: "345844245384" }, { _id: "423232347748787" },{ _id:"786786786424241"}],
+
   },
   {
     _id: "453242104205",
-    name: "Project poopoo",
+    name: "Project 7up",
     status: "doing",
     dateStarted: "before",
     users: [{ _id: "1322897527" }],
+    bugs: [{ _id: "4523123849345" }],
   },
 ];
 

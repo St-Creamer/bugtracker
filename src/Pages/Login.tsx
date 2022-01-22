@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -24,13 +24,13 @@ const ModalButton = styled.button`
 `;
 
 export const Login: React.FC = () => {
-    //yup schema
-    const Schema = Yup.object().shape({
-      password: Yup.string()
-        .defined("This field is required")
-        .min(8, "Password must be at least 8 characters"),
-      email: Yup.string().email().defined("This field is required"),
-    });
+  //yup schema
+  const Schema = Yup.object().shape({
+    password: Yup.string()
+      .defined("This field is required")
+      .min(8, "Password must be at least 8 characters"),
+    email: Yup.string().email().defined("This field is required"),
+  });
 
   //modal stuff
   const [toggle, setToggle] = useState<boolean>(false);
@@ -44,9 +44,9 @@ export const Login: React.FC = () => {
   }
   const history = useHistory();
 
-  const submit = async (values: IFormValues) => {
+  const Submit = async (values: IFormValues) => {
     console.log(values);
-    fetch("http://localhost:4000/auth/login", {
+    const result = await fetch("http://localhost:4000/auth/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -57,16 +57,37 @@ export const Login: React.FC = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        if (res.success) {
-          if (document.cookie.includes("AuthCookie")) history.push("/home");
-        } else {
-          console.log(res);
-        }
+        return res;
       })
       .catch((err) => {
         console.log(err);
         if (String(err).includes("NetworkError")) setToggle(!toggle);
       });
+    //cant use UseFetch hook here :(
+    const projectList = await fetch("http://localhost:4000/project", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        return res;
+      });
+    console.log(result);
+    console.log(projectList);
+    // const [projects, setProjects] = useState<IProject[]>(projectList);
+    // const ProjectsValue = useMemo(
+    //   () => ({ projects, setProjects }),
+    //   [projects, setProjects]
+    // );
+    if (result.success) {
+      if (document.cookie.includes("AuthCookie")) history.push("/home");
+    } else {
+      console.log(result);
+    }
   };
 
   return (
@@ -75,7 +96,7 @@ export const Login: React.FC = () => {
         email: "",
         password: "",
       }}
-      onSubmit={submit}
+      onSubmit={Submit}
       validateOnChange={true}
       validationSchema={Schema}
     >

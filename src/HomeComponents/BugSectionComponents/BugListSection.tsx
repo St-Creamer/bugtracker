@@ -19,7 +19,7 @@ export const BugListSection: React.FC<Props> = () => {
     //this should be replaced by current project bugs
     const CurrentProjectValue = useContext(CurrentProjectContext);
     const HeaderColumns = Object.entries(CurrentProjectValue.current).map(prop =>{return prop[0]})
-    console.log(CurrentProjectValue.current)
+    //console.log(CurrentProjectValue.current)
   return (
     <BugListSectionStyle>
         <ListHeader>

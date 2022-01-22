@@ -19,6 +19,8 @@ import { BugSection } from "../HomeComponents/BugSectionComponents/BugSection";
 import styled from "styled-components";
 import { MockProjects } from "../DB/DB";
 import { useHistory } from "react-router-dom";
+import { Fetch } from "../Fetch";
+
 
 const ButtonStyle = styled.button`
   width: 100px;
@@ -27,24 +29,24 @@ const ButtonStyle = styled.button`
 `;
 
 const Logout = styled.button`
-  width:100%;
-  height:3.5rem;
-  border:1px solid ${props => props.theme.color.primary2};
-  background-color:${props => props.theme.color.secondary1};
-  font-size:${props => props.theme.font.large};
-  margin-top:9vmax;
-  cursor:pointer
-`
+  width: 100%;
+  height: 3.5rem;
+  border: 1px solid ${(props) => props.theme.color.primary2};
+  background-color: ${(props) => props.theme.color.secondary1};
+  font-size: ${(props) => props.theme.font.large};
+  margin-top: 9vmax;
+  cursor: pointer;
+`;
 
-export const Home: React.FC = () => {
-  //projects should come from the backend, belonging projects are filtered further down but the user can browse them all
+export const Home: React.FC =() => {
+  const history = useHistory();
+  //load mock projects so shit doesnt crash
   const [projects, setProjects] = useState<IProject[]>(MockProjects);
   const ProjectsValue = useMemo(
     () => ({ projects, setProjects }),
     [projects, setProjects]
   );
-  const history = useHistory();
-
+  //get projects from db
   useEffect(() => {
     fetch("http://localhost:4000/project", {
       headers: {
@@ -57,7 +59,8 @@ export const Home: React.FC = () => {
       .then((res) => res.json())
       .then((res) => {
         if (res.type == "error") history.push("/");
-        else console.log(res);
+        console.log(res)
+        setProjects(res as IProject[])
       })
       .catch((err) => console.log(err));
   }, []);
@@ -88,6 +91,7 @@ export const Home: React.FC = () => {
     const requestHeaders: HeadersInit = new Headers();
     requestHeaders.set("Content-Type", "application/json");
     requestHeaders.set("withCredentials", "true");
+
     await fetch("http://localhost:4000/auth/logout", {
       method: "GET",
       mode: "cors",
@@ -96,7 +100,7 @@ export const Home: React.FC = () => {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.msg.includes("logged out")) {
           document.cookie =
             "AuthCookie" +
@@ -104,7 +108,7 @@ export const Home: React.FC = () => {
           document.cookie =
             "Me" +
             "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/;domain=localhost;";
-            history.push("/")
+          history.push("/");
         }
       })
       .catch((err) => {

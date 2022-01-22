@@ -8,19 +8,14 @@ import { MembersHeader } from "./MembersHeader";
 interface Props {}
 
 export const MemberSection: React.FC<Props> = () => {
+  //get current project
   const CurrentProjectValue = useContext(CurrentProjectContext);
-  //this should be replaced with db call to retrieve list of members in current project
-  const CurrentIdArray = CurrentProjectValue.current.users.map((userId:{_id:string})=>{
-    return userId._id
-  })
-  const CurrentMembers:IUser[]= members.filter((member:IUser)=>{
-    return CurrentIdArray.includes(member._id)
-  })
-
+  //get current users
+  const CurrentUsers = (CurrentProjectValue.current.users as IUser[])
   return (
     <>
       <MembersHeader count={CurrentProjectValue.current.users.length} />
-      {CurrentMembers.map((user:IUser) => {
+      {CurrentUsers.map((user:IUser) => {
         return <Member key={user._id} user={user}/>;
       })}
     </>

@@ -18,7 +18,7 @@ export interface IUser {
   email: string;
   password: string;
   role: string;
-  projects: { _id: string }[];
+  projects?: { _id: string }[];
 }
 
 export interface IProject {
@@ -27,6 +27,7 @@ export interface IProject {
   status: string;
   dateStarted: string;
   users: { _id: string }[];
+  bugs?:{_id:string}[]
 }
 
 export interface IBug {
