@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { IUser } from "../../App";
 import { CurrentProjectContext } from "../../CurrentProjectContext";
-import { members } from "../../DB/DB";
 import { Member } from "./Member";
 import { MembersHeader } from "./MembersHeader";
+import { v4 as uuidv4 } from "uuid"
 
 interface Props {}
 
@@ -16,7 +16,7 @@ export const MemberSection: React.FC<Props> = () => {
     <>
       <MembersHeader count={CurrentProjectValue.current.users.length} />
       {CurrentUsers.map((user:IUser) => {
-        return <Member key={user._id} user={user}/>;
+        return <Member key={uuidv4()} user={user}/>;
       })}
     </>
   );

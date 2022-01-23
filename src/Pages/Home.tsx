@@ -19,7 +19,7 @@ import { BugSection } from "../HomeComponents/BugSectionComponents/BugSection";
 import styled from "styled-components";
 import { MockProjects } from "../DB/DB";
 import { useHistory } from "react-router-dom";
-import { Fetch } from "../Fetch";
+import { v4 as uuidv4 } from "uuid"
 
 
 const ButtonStyle = styled.button`
@@ -59,8 +59,8 @@ export const Home: React.FC =() => {
       .then((res) => res.json())
       .then((res) => {
         if (res.type == "error") history.push("/");
-        console.log(res)
         setProjects(res as IProject[])
+        setCurrent(res[0] as IProject)
       })
       .catch((err) => console.log(err));
   }, []);
@@ -72,6 +72,23 @@ export const Home: React.FC =() => {
     () => ({ current, setCurrent }),
     [current, setCurrent]
   );
+  const setCurrentFromDb = async (id:string):Promise<any>=>{
+    await fetch(`http://localhost:4000/project/${id}`,{
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      method: "GET",
+    })
+    .then(res=>res.json())
+    .then(res=> {
+      if(res){
+        setCurrent(res)
+      }
+      return res
+    })
+  }
   // Tab logic
   const [active, setActive] = useState<number>(0);
   const handleClick = (e?: any) => {
@@ -136,8 +153,9 @@ export const Home: React.FC =() => {
             <ProjectsContainer>
               {ProjectsValue.projects.map((item: IProject, i) => (
                 <Project
-                  key={`${item._id}`}
+                  key={uuidv4()}
                   onClick={(e) => {
+                    setCurrentFromDb(item._id)
                     handleClick(e);
                     setCurrent(item);
                   }}
