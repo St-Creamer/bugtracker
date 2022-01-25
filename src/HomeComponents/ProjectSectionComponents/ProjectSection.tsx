@@ -107,7 +107,7 @@ export const ProjectSection: React.FC<Props> = () => {
       </ProjectHeader>
       <ProjectStatus>
         <Status>Project Status:</Status>
-        <SpecialLabel text={text} color={color} />
+        <SpecialLabel text={text} bgColor={color} />
       </ProjectStatus>
       <ProjectDate>
         <Date>Date Started: {CurrentProjectValue.current.dateStarted}</Date>

@@ -27,7 +27,8 @@ export interface IProject {
   status: string;
   dateStarted: string;
   users: { _id: string }[];
-  bugs?:{_id:string}[]
+  bugs?:{_id:string}[];
+  author?:string;
 }
 
 export interface IBug {
