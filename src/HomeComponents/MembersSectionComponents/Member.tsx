@@ -5,16 +5,17 @@ import { CurrentProjectContext } from "../../CurrentProjectContext";
 import { SpecialLabel } from "../Label";
 
 const MemberStyle = styled.div`
+padding:0px 10px 0px 10px;
   line-height: 3rem;
   height: 3.5rem;
   width: 100%;
   border-bottom: 1px solid ${(Props) => Props.theme.color.basic2};
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 const MemberName = styled.div`
   font-size: ${(Props) => Props.theme.font.large};
-  width: 40%;
+  width: 60%;
 `;
 
 interface Props {
@@ -43,6 +44,7 @@ export const Member: React.FC<Props> = ({ user }) => {
   return (
     <MemberStyle>
       <MemberName>{user.name}</MemberName>
+      <span>{user._id == currentUserId? "(you)":""}</span>
       {CurrentProjectValue.current.author == currentUserId
         ? <SpecialLabel text={"Author"} bgColor="black" textColor="white" />
         : <SpecialLabel text={user.role} bgColor={color}  textColor="black"/>}

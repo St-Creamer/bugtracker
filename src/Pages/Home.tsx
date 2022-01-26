@@ -34,8 +34,9 @@ const Logout = styled.button`
   border: 1px solid ${(props) => props.theme.color.primary2};
   background-color: ${(props) => props.theme.color.secondary1};
   font-size: ${(props) => props.theme.font.large};
-  margin-top: 9vmax;
+  min-height:40px;
   cursor: pointer;
+  transition:.5s ease all;
 `;
 
 export const Home: React.FC =() => {
@@ -168,7 +169,7 @@ export const Home: React.FC =() => {
             </ProjectsContainer>
             <Logout onClick={logout}>logout</Logout>
           </Frame>
-          <Frame size={30} color={Theme.color.basic1}>
+          <Frame size={25} color={Theme.color.basic1}>
             {/* this part serves as tab content */}
             <ProjectSection />
             <MemberSection />

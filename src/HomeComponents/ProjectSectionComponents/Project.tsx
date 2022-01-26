@@ -20,4 +20,7 @@ export const Project = styled.div<Props>`
   transition: 0.5s ease all;
   border-top-left-radius: ${(Props) => (Props.active ? "5px" : "0px")};
   border-bottom-left-radius: ${(Props) => (Props.active ? "5px" : "0px")};
+  &:hover{
+    filter: brightness(.8) 
+    }
 `;

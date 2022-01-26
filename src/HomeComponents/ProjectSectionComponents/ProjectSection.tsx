@@ -40,16 +40,14 @@ const ProjectStatus = styled.div`
   height: 3.5rem;
   display: flex;
   justify-content: space-between;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding:0px 10px 0px 10px;
 `;
 
 const ProjectDate = styled.div`
   width: 100%;
   border-bottom: 1px solid ${(Props) => Props.theme.color.basic2};
   height: 3.5rem;
-  padding-left: 10%;
-  padding-right: 10%;
+  padding:0px 10px 0px 10px;
   line-height: 3.3rem;
 `;
 
