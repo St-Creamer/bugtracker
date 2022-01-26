@@ -20,6 +20,7 @@ import styled from "styled-components";
 import { MockProjects } from "../DB/DB";
 import { useHistory } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid"
+import { NewProjectForm } from "../HomeComponents/NewProjectForm";
 
 
 const ButtonStyle = styled.button`
@@ -143,7 +144,9 @@ export const Home: React.FC =() => {
             <NewProject onClick={modalHandler}>New Project +</NewProject>
             <Modal show={toggle} clicked={modalHandler}>
               <ModalHeader>New Project</ModalHeader>
-              <ModalBody> New Project Form Here</ModalBody>
+              <ModalBody> 
+                <NewProjectForm/>
+              </ModalBody>
               <ModalFooter>
                 <ButtonStyle onClick={modalHandler}>Cancel</ButtonStyle>
                 <ButtonStyle onClick={modalHandler}>Ok</ButtonStyle>

@@ -63,33 +63,13 @@ export const Login: React.FC = () => {
         console.log(err);
         if (String(err).includes("NetworkError")) setToggle(!toggle);
       });
-    //cant use UseFetch hook here :(
-    const projectList = await fetch("http://localhost:4000/project", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        return res;
-      });
-    console.log(result);
-    console.log(projectList);
-    // const [projects, setProjects] = useState<IProject[]>(projectList);
-    // const ProjectsValue = useMemo(
-    //   () => ({ projects, setProjects }),
-    //   [projects, setProjects]
-    // );
+
     if (result.success) {
       if (document.cookie.includes("AuthCookie")) history.push("/home");
     } else {
       console.log(result);
     }
   };
-
   return (
     <Formik
       initialValues={{

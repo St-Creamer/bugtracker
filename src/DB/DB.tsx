@@ -1,5 +1,7 @@
 import {IUser,IProject, IBug} from "../App"
 
+//this is a mock database used in development, will stay here to be the default data in case server breaks
+
 export const MockProjects:IProject[] = [
   {
     _id: "36565163132",
